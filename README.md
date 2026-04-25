@@ -120,6 +120,9 @@ npx serve .
 The site is deployed on GitHub Pages:
 **https://solaris4.github.io/202264320-NadaAlshahrani-assignment4/**
 
+### 🎬 Video Presentation
+**https://youtu.be/kP3pJYcPrMI**
+
 ### Note on APIs
 - **GitHub section:** fetches from `https://api.github.com` — no key needed, rate limit is 60 req/hour per IP
 - **Tech Reads sidebar:** hardcoded articles with links to each writer's Substack — no API needed
