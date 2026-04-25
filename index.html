@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Nada Alshahrani - Software Engineering Student Portfolio">
+    <title>Nada Alshahrani | Software Engineer</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- ===== Substack Reading Sidebar (Assignment 4 – New Feature) ===== -->
+
+    <!-- Overlay (closes sidebar on outside click on mobile) -->
+    <div class="sidebar-overlay" id="sidebarOverlay" aria-hidden="true"></div>
+
+    <!-- Toggle button (always visible on left edge) -->
+    <button class="substack-toggle" id="substackToggle" aria-label="Open tech reading sidebar" aria-expanded="false" aria-controls="substackSidebar">
+        <span class="toggle-icon">📰</span>
+        Tech Reads
+    </button>
+
+    <!-- Sidebar panel -->
+    <aside class="substack-sidebar" id="substackSidebar" role="complementary" aria-label="Tech reading sidebar">
+        <div class="sidebar-header">
+            <h2>📰 Tech Reads</h2>
+            <button class="sidebar-close" id="sidebarClose" aria-label="Close sidebar">✕</button>
+        </div>
+
+        <!-- Writer tabs -->
+        <div class="sidebar-tabs" role="tablist" aria-label="Tech writers" id="sidebarTabs"></div>
+
+        <!-- Articles content area -->
+        <div class="sidebar-content" id="sidebarContent" role="tabpanel"></div>
+    </aside>
+
+    <!-- Navigation -->
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <div class="container">
+            <div class="nav-brand">NA</div>
+            <ul class="nav-menu">
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#github" class="nav-link">GitHub</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#experience" class="nav-link">Experience</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="nav-controls">
+                <!-- Visitor session timer -->
+                <div class="session-timer" id="sessionTimer" aria-label="Time spent on page">
+                    <span class="timer-icon">⏱️</span>
+                    <span id="timerDisplay">0:00</span>
+                </div>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light theme">
+                    <span class="sun-icon">☀️</span>
+                    <span class="moon-icon">🌙</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Visitor Name Banner (State Management) -->
+    <div class="visitor-banner" id="visitorBanner" style="display:none;">
+        <div class="container">
+            <span id="visitorWelcome"></span>
+            <button class="banner-close" id="bannerClose" aria-label="Close banner">✕</button>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-background"></div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="greeting" id="greeting"></div>
+                <h1 class="hero-title">
+                    <span class="title-line">Nada</span>
+                    <span class="title-line">Alshahrani</span>
+                </h1>
+                <p class="hero-subtitle">Software Engineering Student</p>
+                <p class="hero-tagline">Building the future, one line of code at a time</p>
+
+                <!-- Visitor Name Input (State Management Feature) -->
+                <div class="visitor-name-box" id="visitorNameBox">
+                    <p class="visitor-prompt">May I know your name? 👋</p>
+                    <div class="visitor-input-row">
+                        <input type="text" id="visitorNameInput" class="visitor-input" placeholder="Enter your name..." aria-label="Your name" maxlength="40">
+                        <button class="btn btn-primary btn-sm" id="visitorNameSubmit">Hello!</button>
+                    </div>
+                </div>
+
+                <div class="hero-buttons">
+                    <a href="#github" class="btn btn-primary">View My GitHub</a>
+                    <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator" aria-hidden="true">
+            <div class="mouse"></div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-number" aria-hidden="true">01</span>
+                <h2 class="section-title">About Me</h2>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <p class="about-intro">
+                        I'm a Software Engineering student at King Fahad University of Petroleum and Minerals, 
+                        passionate about creating innovative solutions through code. With a strong foundation in 
+                        object-oriented programming and web development, I'm constantly exploring new technologies 
+                        and pushing the boundaries of what's possible.
+                    </p>
+                    <div class="about-details">
+                        <div class="detail-item">
+                            <h3>Education</h3>
+                            <p><strong>King Fahad University of Petroleum and Minerals</strong></p>
+                            <p>BSc Software Engineering | 2022–2027</p>
+                        </div>
+                        <div class="detail-item">
+                            <h3>Location</h3>
+                            <p>Dhahran, Saudi Arabia</p>
+                        </div>
+                        <div class="detail-item">
+                            <h3>Languages</h3>
+                            <p>Arabic (Native), English (Fluent – IELTS 7.5)</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="skills-section">
+                    <h3 class="skills-title">Technical Skills</h3>
+                    <div class="skills-grid">
+                        <div class="skill-card">
+                            <div class="skill-icon">💻</div>
+                            <h4>Programming</h4>
+                            <p>Object-Oriented Programming, Java, Algorithms & Data Structures</p>
+                        </div>
+                        <div class="skill-card">
+                            <div class="skill-icon">🌐</div>
+                            <h4>Web Development</h4>
+                            <p>HTML, CSS, JavaScript, Responsive Design</p>
+                        </div>
+                        <div class="skill-card">
+                            <div class="skill-icon">📊</div>
+                            <h4>Software Engineering</h4>
+                            <p>Requirements Analysis, Database Systems, Project Management</p>
+                        </div>
+                        <div class="skill-card">
+                            <div class="skill-icon">🤖</div>
+                            <h4>AI & Research</h4>
+                            <p>Natural Language Processing, Technical Writing</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== GitHub API Section (NEW - Assignment 3) ===== -->
+    <section class="github-section" id="github">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-number" aria-hidden="true">02</span>
+                <h2 class="section-title">GitHub Repositories</h2>
+            </div>
+            <p class="github-intro">
+                Live data fetched from the GitHub API — showing my public repositories.
+            </p>
+            <div class="github-controls">
+                <div class="github-search-wrap">
+                    <input type="text" id="repoSearch" class="repo-search" placeholder="🔍 Search repositories..." aria-label="Search repositories">
+                </div>
+                <div class="github-sort-wrap">
+                    <label for="repoSort" class="sort-label">Sort by:</label>
+                    <select id="repoSort" class="repo-sort" aria-label="Sort repositories">
+                        <option value="updated">Recently Updated</option>
+                        <option value="stars">Most Stars</option>
+                        <option value="name">Name (A–Z)</option>
+                    </select>
+                </div>
+            </div>
+            <div id="githubLoading" class="api-loading" aria-live="polite">
+                <div class="loading-spinner"></div>
+                <p>Fetching repositories from GitHub...</p>
+            </div>
+            <div id="githubError" class="api-error" style="display:none;" role="alert">
+                <span class="error-icon">⚠️</span>
+                <p id="githubErrorMsg">Could not load repositories. Please check your connection and try again.</p>
+                <button class="btn btn-secondary btn-sm" id="retryBtn">Retry</button>
+            </div>
+            <div class="github-grid" id="githubGrid" style="display:none;" aria-label="GitHub repositories"></div>
+            <div id="noRepoMsg" class="empty-message" style="display:none;">No repositories match your search.</div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="projects" id="projects">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-number" aria-hidden="true">03</span>
+                <h2 class="section-title">Featured Projects</h2>
+            </div>
+
+            <!-- Filter + Sort Controls (Complex Logic) -->
+            <div class="project-controls">
+                <div class="project-filters" role="group" aria-label="Filter projects by category">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="design">Design</button>
+                    <button class="filter-btn" data-filter="research">Research</button>
+                    <button class="filter-btn" data-filter="web">Web</button>
+                </div>
+                <div class="project-sort-wrap">
+                    <label for="projectSort" class="sort-label">Sort:</label>
+                    <select id="projectSort" class="project-sort" aria-label="Sort projects">
+                        <option value="default">Default</option>
+                        <option value="name-asc">Name (A–Z)</option>
+                        <option value="name-desc">Name (Z–A)</option>
+                        <option value="date-new">Newest First</option>
+                        <option value="date-old">Oldest First</option>
+                    </select>
+                </div>
+            </div>
+
+            <p id="emptyMessage" class="empty-message" style="display:none;" role="status">No projects match the selected filter.</p>
+
+            <div class="projects-grid" id="projectsGrid">
+                <div class="project-card" data-category="design" data-date="2024-12" data-name="KFUPM Events Management System">
+                    <div class="project-image">
+                        <div class="project-placeholder">
+                            <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <rect width="400" height="300" fill="#73A5C6"/>
+                                <text x="200" y="140" text-anchor="middle" fill="white" font-size="20" font-family="sans-serif" font-weight="bold">Events System</text>
+                                <text x="200" y="170" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="14" font-family="sans-serif">UI/UX Design</text>
+                            </svg>
+                        </div>
+                        <div class="project-overlay">
+                            <span class="project-category-badge">Design</span>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">KFUPM Events Management System</h3>
+                        <p class="project-description">
+                            Collaborated on designing and prototyping a centralized university events platform using UI/UX design principles.
+                        </p>
+                        <div class="project-meta">
+                            <span class="project-date">Dec 2024</span>
+                            <span class="project-cat-tag design">Design</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card" data-category="research" data-date="2025-01" data-name="Natural Language Processing Research Article">
+                    <div class="project-image">
+                        <div class="project-placeholder">
+                            <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <rect width="400" height="300" fill="#5B8FA3"/>
+                                <text x="200" y="140" text-anchor="middle" fill="white" font-size="20" font-family="sans-serif" font-weight="bold">NLP Research</text>
+                                <text x="200" y="170" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="14" font-family="sans-serif">AI &amp; Research</text>
+                            </svg>
+                        </div>
+                        <div class="project-overlay">
+                            <span class="project-category-badge">Research</span>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Natural Language Processing Research Article</h3>
+                        <p class="project-description">
+                            Authored a technical article on NLP and AI applications for the KFUPM AI Club magazine.
+                        </p>
+                        <div class="project-meta">
+                            <span class="project-date">Jan 2025</span>
+                            <span class="project-cat-tag research">Research</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card" data-category="web" data-date="2025-02" data-name="Personal Portfolio Website">
+                    <div class="project-image">
+                        <div class="project-placeholder">
+                            <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <rect width="400" height="300" fill="#4A90A4"/>
+                                <text x="200" y="140" text-anchor="middle" fill="white" font-size="20" font-family="sans-serif" font-weight="bold">Portfolio Site</text>
+                                <text x="200" y="170" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="14" font-family="sans-serif">HTML · CSS · JS</text>
+                            </svg>
+                        </div>
+                        <div class="project-overlay">
+                            <span class="project-category-badge">Web</span>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Personal Portfolio Website</h3>
+                        <p class="project-description">
+                            This very portfolio, built from scratch with HTML, CSS, and JavaScript — featuring dark mode, API integration, and dynamic content.
+                        </p>
+                        <div class="project-meta">
+                            <span class="project-date">Feb 2025</span>
+                            <span class="project-cat-tag web">Web</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section class="experience" id="experience">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-number" aria-hidden="true">04</span>
+                <h2 class="section-title">Experience</h2>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">Sep 2024 – Jan 2025</div>
+                        <h3 class="timeline-title">Lab Assistant – ICS 108</h3>
+                        <h4 class="timeline-subtitle">ICS Department, KFUPM</h4>
+                        <p class="timeline-description">
+                            Assisted students in understanding object-oriented programming concepts using Java 
+                            during weekly lab sessions. Helped debug code, explained complex programming concepts, 
+                            and fostered a collaborative learning environment.
+                        </p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">Sep 2025 – Jan 2026</div>
+                        <h3 class="timeline-title">Research Committee Member</h3>
+                        <h4 class="timeline-subtitle">KFUPM Artificial Intelligence Club (AIC)</h4>
+                        <p class="timeline-description">
+                            Active member of the research committee, contributing to AI-related initiatives. 
+                            Authored technical articles on Natural Language Processing for the AIC student magazine, 
+                            promoting AI literacy and research awareness among peers.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-number" aria-hidden="true">05</span>
+                <h2 class="section-title">Get In Touch</h2>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <p class="contact-intro">
+                        I'm currently seeking summer training opportunities and always open to discussing 
+                        software engineering, AI research, or collaborative projects. Let's connect!
+                    </p>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <span class="contact-icon" aria-hidden="true">📧</span>
+                            <a href="mailto:Nadaalshahranisa@gmail.com">Nadaalshahranisa@gmail.com</a>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-icon" aria-hidden="true">📱</span>
+                            <a href="tel:+966553903812">(966) 553-903-812</a>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-icon" aria-hidden="true">💼</span>
+                            <a href="https://linkedin.com/in/nada-alshahrani" target="_blank" rel="noopener noreferrer">LinkedIn Profile</a>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-icon" aria-hidden="true">📍</span>
+                            <span>Dhahran, Saudi Arabia</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Enhanced Contact Form (Complex Logic - multiple validations) -->
+                <form class="contact-form" id="contactForm" novalidate>
+                    <div class="form-group">
+                        <label for="name">Full Name <span class="required">*</span></label>
+                        <input type="text" id="name" name="name" placeholder="Your full name" autocomplete="name" minlength="2" maxlength="60">
+                        <span class="field-error" id="nameError" role="alert"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address <span class="required">*</span></label>
+                        <input type="email" id="email" name="email" placeholder="your.email@example.com" autocomplete="email">
+                        <span class="field-error" id="emailError" role="alert"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject <span class="required">*</span></label>
+                        <select id="subject" name="subject" aria-label="Message subject">
+                            <option value="">— Select a subject —</option>
+                            <option value="internship">Summer Training / Internship</option>
+                            <option value="collaboration">Project Collaboration</option>
+                            <option value="research">Research Inquiry</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <span class="field-error" id="subjectError" role="alert"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message <span class="required">*</span></label>
+                        <textarea id="message" name="message" rows="5" placeholder="Your message... (min. 20 characters)" minlength="20" maxlength="1000"></textarea>
+                        <span class="char-count" id="charCount">0 / 1000</span>
+                        <span class="field-error" id="messageError" role="alert"></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full" id="submitBtn">Send Message ✈️</button>
+                    <div class="form-message" id="formMessage" role="status" aria-live="polite"></div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2025 Nada Alshahrani. Built with passion and code.</p>
+                <p class="footer-tagline">Crafted as part of Web Engineering coursework · Assignment 4</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
