@@ -131,7 +131,7 @@ setInterval(() => {
 // -----------------------------------------------
 // 6. GITHUB API INTEGRATION
 // -----------------------------------------------
-const GITHUB_USERNAME = 'nada-alshahrani'; // ← replace with your real username if different
+const GITHUB_USERNAME = 'Solaris4'; // ← your GitHub username
 const githubGrid    = document.getElementById('githubGrid');
 const githubLoading = document.getElementById('githubLoading');
 const githubError   = document.getElementById('githubError');
@@ -607,7 +607,6 @@ const SUBSTACK_WRITERS = [
     },
 ];
 
-const RSS2JSON_BASE = 'https://api.rss2json.com/v1/api.json?rss_url=';
 const ARTICLES_PER_WRITER = 3;
 
 // Cache to avoid re-fetching on tab switch
@@ -691,16 +690,29 @@ async function loadWriterArticles(index) {
         </div>`;
 
     try {
-        const encodedUrl = encodeURIComponent(writer.rss);
-        const response   = await fetch(`${RSS2JSON_BASE}${encodedUrl}&count=${ARTICLES_PER_WRITER}`);
+        // Use allorigins proxy to bypass CORS on GitHub Pages
+        const proxyUrl  = `https://api.allorigins.win/get?url=${encodeURIComponent(writer.rss)}`;
+        const response  = await fetch(proxyUrl);
 
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
         const data = await response.json();
 
-        if (data.status !== 'ok') throw new Error(data.message || 'Feed error');
+        // Parse the RSS XML string returned by allorigins
+        const parser  = new DOMParser();
+        const xmlDoc  = parser.parseFromString(data.contents, 'text/xml');
+        const items   = Array.from(xmlDoc.querySelectorAll('item')).slice(0, ARTICLES_PER_WRITER);
 
-        const articles = (data.items || []).slice(0, ARTICLES_PER_WRITER);
+        if (!items.length) throw new Error('No articles found in feed.');
+
+        // Map XML nodes to a simple article object
+        const articles = items.map(item => ({
+            title:       item.querySelector('title')?.textContent       || 'Untitled',
+            link:        item.querySelector('link')?.textContent        || writer.url,
+            description: item.querySelector('description')?.textContent || '',
+            pubDate:     item.querySelector('pubDate')?.textContent     || '',
+        }));
+
         articlesCache[writer.id] = articles;
         renderArticles(writer, articles);
 
@@ -772,4 +784,3 @@ substackToggle?.addEventListener('click', function onFirstOpen() {
     loadWriterArticles(0);
     substackToggle.removeEventListener('click', onFirstOpen); // load once
 }, { once: true });
-
