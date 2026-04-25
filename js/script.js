@@ -1,5 +1,5 @@
 // ===============================================
-// Assignment 3 – script.js
+// Assignment 4 – script.js
 // Author: Nada Alshahrani
 // Features: GitHub API, State Management,
 //           Session Timer, Filter+Sort, Validation
