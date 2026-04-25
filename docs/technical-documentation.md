@@ -4,6 +4,7 @@
 
 **Version:** 4.0  
 **Last Updated:** April 2025  
+**Assignment:** 4  
 **Developer:** Nada Alshahrani
 
 ---
@@ -19,6 +20,7 @@
    - 5.3 State Management
    - 5.4 Enhanced Form Validation
    - 5.5 Performance Optimisations
+   - 5.6 Tech Reads Sidebar *(New – Assignment 4)*
 6. [Responsive Design](#6-responsive-design)
 7. [Browser Compatibility](#7-browser-compatibility)
 8. [Accessibility](#8-accessibility)
@@ -29,16 +31,17 @@
 ## 1. Project Overview
 
 ### Purpose
-A professional portfolio website for Nada Alshahrani, Software Engineering student, demonstrating progressively advanced web development skills across three assignments. Assignment 3 introduces external API integration, persistent state management, and complex multi-step application logic.
+A professional portfolio website for Nada Alshahrani, Software Engineering student, demonstrating progressively advanced web development skills across four assignments. Assignment 4 is the final, polished version — it introduces a persistent Tech Reads sidebar showcasing curated articles from followed tech writers, deploys the site publicly on GitHub Pages, and delivers a complete video presentation.
 
-### What Is New in Version 3
-| Area | Assignment 2 | Assignment 3 |
+### What Is New in Version 4
+| Area | Assignment 3 | Assignment 4 |
 |------|------|------|
-| API | None | GitHub REST API v3 |
-| State | Theme only (localStorage) | Theme + Visitor name + Session timer |
-| Project logic | Filter only | Filter + multi-criteria Sort |
-| Form validation | Single error banner | Inline per-field errors + char counter + subject dropdown |
-| Performance | Debounce, IntersectionObserver | + `unobserve` after first trigger |
+| Innovation Feature | None | Tech Reads Sidebar (5 curated writers) |
+| Layout | Single-column main content | Sidebar + main content side-by-side |
+| Deployment | Local only | Live on GitHub Pages |
+| Presentation | Not required | 5–7 min video presentation |
+| File Structure | Flat root folder | Organised subfolders (css/, js/, docs/, assets/, presentation/) |
+| Documentation | Assignment 3 docs | Updated for Assignment 4 throughout |
 
 ---
 
@@ -61,31 +64,56 @@ A professional portfolio website for Nada Alshahrani, Software Engineering stude
 
 ### Component Tree
 ```
-Portfolio Website (Assignment 3)
-├── Visitor Banner          ← State Management (localStorage name)
+Portfolio Website (Assignment 4)
+├── Tech Reads Sidebar          ← NEW – Assignment 4 Innovation Feature
+│   ├── Sidebar Header
+│   └── Writer Sections (x5)
+│       ├── Writer Info Row
+│       └── Article Cards (x2–3 per writer)
 ├── Navigation
 │   ├── Nav Links
-│   ├── Session Timer       ← State (setInterval counter)
-│   └── Theme Toggle        ← State (localStorage theme)
+│   ├── Session Timer           ← State (setInterval counter)
+│   └── Theme Toggle            ← State (localStorage theme)
+├── Visitor Banner              ← State Management (localStorage name)
 ├── Hero
-│   └── Visitor Name Input  ← State (read/write localStorage)
+│   └── Visitor Name Input      ← State (read/write localStorage)
 ├── About
 │   └── Skills Grid
-├── GitHub Section          ← API Integration
-│   ├── Search Input        ← Complex Logic (debounced filter)
-│   ├── Sort Dropdown       ← Complex Logic (sort allRepos[])
+├── GitHub Section              ← API Integration
+│   ├── Search Input            ← Complex Logic (debounced filter)
+│   ├── Sort Dropdown           ← Complex Logic (sort allRepos[])
 │   ├── Loading Spinner
 │   ├── Error + Retry
 │   └── Repo Cards (dynamic)
 ├── Projects Section
-│   ├── Filter Buttons      ← Complex Logic (category filter)
-│   ├── Sort Dropdown       ← Complex Logic (multi-criteria sort)
+│   ├── Filter Buttons          ← Complex Logic (category filter)
+│   ├── Sort Dropdown           ← Complex Logic (multi-criteria sort)
 │   └── Project Cards (static data)
 ├── Experience (Timeline)
 ├── Contact
 │   ├── Contact Info
-│   └── Enhanced Form       ← Complex Logic (multi-step validation)
+│   └── Enhanced Form           ← Complex Logic (multi-step validation)
 └── Footer
+```
+
+### Tech Reads Sidebar Data Flow
+```
+Page Load
+    │
+    ▼
+renderTechReads()
+    │
+    ▼
+Iterate TECH_READS array (5 writers, hardcoded)
+    │
+    ▼
+Build HTML: writer-info banner + article cards per writer
+    │
+    ▼
+sidebarContent.innerHTML = html
+    │
+    ▼
+Sidebar visible immediately — no fetch, no spinner, no CORS issues
 ```
 
 ### GitHub API Data Flow
@@ -143,16 +171,21 @@ Page Load
 ## 4. File Structure
 
 ```
-id-name-assignment3/
-├── README.md                       # Project overview & setup guide
-├── index.html                      # Main HTML (semantic, accessible)
-├── styles.css                      # All styles (moonstone blue theme)
-├── script.js                       # All JavaScript behaviour
+id-name-assignment4/
+├── README.md
+├── index.html
+├── css/
+│   └── styles.css
+├── js/
+│   └── script.js
 ├── assets/
-│   └── images/                     # Future: real project screenshots
+│   └── images/
 ├── docs/
-│   ├── ai-usage-report.md          # AI tool usage documentation
-│   └── technical-documentation.md  # This file
+│   ├── ai-usage-report.md
+│   └── technical-documentation.md
+├── presentation/
+│   ├── slides.pdf
+│   └── demo-video.mp4
 └── .gitignore
 ```
 
@@ -209,8 +242,6 @@ async function fetchGitHubRepos() {
 | Other | "GitHub API error (NNN). Please try again." |
 | Network failure | "Could not load repositories. Please check your connection." |
 
-A **Retry** button calls `fetchGitHubRepos()` again, giving the user agency without a page refresh.
-
 #### Repo Card Fields Used
 | API Field | Displayed As |
 |---|---|
@@ -228,33 +259,26 @@ A **Retry** button calls `fetchGitHubRepos()` again, giving the user agency with
 
 ### 5.2 Complex Logic – Filter + Sort
 
-This feature demonstrates multi-step conditional logic: the user can independently apply a **category filter** and a **sort order**, and both are combined before rendering.
-
 #### Projects Grid
 ```javascript
 function applyProjectFilterSort() {
-    // Step 1: Filter by active category button
     let visible = projectData.filter(p =>
         activeFilter === 'all' || p.category === activeFilter
     );
 
-    // Step 2: Sort the filtered subset by the dropdown value
     const sortVal = projectSort?.value || 'default';
     if (sortVal === 'name-asc')  visible.sort((a, b) => a.name.localeCompare(b.name));
     if (sortVal === 'name-desc') visible.sort((a, b) => b.name.localeCompare(a.name));
     if (sortVal === 'date-new')  visible.sort((a, b) => b.date.localeCompare(a.date));
     if (sortVal === 'date-old')  visible.sort((a, b) => a.date.localeCompare(b.date));
 
-    // Step 3: Re-order DOM elements and show/hide
     const visibleSet = new Set(visible.map(p => p.el));
     projectData.forEach(p => { p.el.style.display = visibleSet.has(p.el) ? '' : 'none'; });
-    visible.forEach(p => projectsGrid.appendChild(p.el)); // Re-order in sorted sequence
+    visible.forEach(p => projectsGrid.appendChild(p.el));
 
     emptyMessage.style.display = visible.length === 0 ? 'block' : 'none';
 }
 ```
-
-**Why this is "complex logic":** The function combines two independent user choices (a filter and a sort criterion) in a defined sequence — filter first, then sort — and produces a result that neither choice alone would determine. The implementation also avoids rebuilding DOM nodes, instead relying on the browser's behaviour that `appendChild` on an existing node moves it rather than duplicates it.
 
 #### GitHub Repos
 ```javascript
@@ -262,7 +286,6 @@ function filterAndSortRepos() {
     const query  = repoSearch.value.toLowerCase().trim();
     const sortBy = repoSort.value;
 
-    // Step 1: Filter by search query (name OR description OR language)
     let filtered = allRepos.filter(repo => {
         const nameMatch = repo.name.toLowerCase().includes(query);
         const descMatch = (repo.description || '').toLowerCase().includes(query);
@@ -270,11 +293,10 @@ function filterAndSortRepos() {
         return nameMatch || descMatch || langMatch;
     });
 
-    // Step 2: Sort
     filtered.sort((a, b) => {
         if (sortBy === 'stars') return b.stargazers_count - a.stargazers_count;
         if (sortBy === 'name')  return a.name.localeCompare(b.name);
-        return new Date(b.updated_at) - new Date(a.updated_at); // default: updated
+        return new Date(b.updated_at) - new Date(a.updated_at);
     });
 
     renderRepos(filtered);
@@ -287,27 +309,15 @@ function filterAndSortRepos() {
 
 #### Visitor Name (localStorage – Persistent)
 ```javascript
-// On submit:
 localStorage.setItem('visitorName', name);
-showVisitorBanner(name);   // Hides input box, shows banner
-
-// On page load:
 const savedName = localStorage.getItem('visitorName');
-if (savedName) {
-    showVisitorBanner(savedName); // Restores state immediately
-}
+if (savedName) showVisitorBanner(savedName);
 ```
-Persists across browser sessions. The visitor sees their personalised banner every time they return.
 
 #### Theme Preference (localStorage – Persistent)
 ```javascript
 const savedTheme = localStorage.getItem('theme') || 'light';
 if (savedTheme === 'dark') body.classList.add('dark-theme');
-
-themeToggle.addEventListener('click', () => {
-    body.classList.toggle('dark-theme');
-    localStorage.setItem('theme', body.classList.contains('dark-theme') ? 'dark' : 'light');
-});
 ```
 
 #### Session Timer (setInterval – Session-only)
@@ -320,40 +330,17 @@ setInterval(() => {
     timerDisplay.textContent = `${mins}:${String(secs).padStart(2, '0')}`;
 }, 1000);
 ```
-Counts up from 0:00 every second. Displayed in the navbar. Resets on page refresh — intentionally session-scoped.
 
 ---
 
 ### 5.4 Enhanced Contact Form Validation
 
-The form uses JavaScript-only validation (`novalidate` on the `<form>` element suppresses browser defaults). This gives full control over when and how errors appear.
-
-#### Validation Rules
 | Field | Rule | Error Message |
 |---|---|---|
 | Name | Required, min 2 chars | "Please enter your full name (at least 2 characters)." |
-| Email | Required, regex test | "Please enter a valid email address (e.g. you@example.com)." |
+| Email | Required, regex test | "Please enter a valid email address." |
 | Subject | Required (not empty option) | "Please select a subject for your message." |
 | Message | Required, min 20 chars | "Your message must be at least 20 characters long." |
-
-#### Inline Error Display
-```javascript
-function showFieldError(fieldId, msg) {
-    document.getElementById(`${fieldId}Error`).textContent = msg;
-    document.getElementById(fieldId).classList.add('field-invalid');
-}
-```
-Errors appear directly beneath the offending field. The `field-invalid` class applies a red border. All errors are cleared (`clearErrors()`) before each validation run so stale messages do not persist.
-
-#### Character Counter
-```javascript
-messageInput.addEventListener('input', () => {
-    const len = messageInput.value.length;
-    charCount.textContent = `${len} / 1000`;
-    charCount.style.color = len >= 900 ? '#dc3545' : '';
-});
-```
-Turns red when the user is within 100 characters of the limit.
 
 ---
 
@@ -361,18 +348,9 @@ Turns red when the user is within 100 characters of the limit.
 
 #### Debouncing
 ```javascript
-function debounce(func, wait) {
-    let timeout;
-    return function (...args) {
-        clearTimeout(timeout);
-        timeout = setTimeout(() => func.apply(this, args), wait);
-    };
-}
-
 const debouncedSearch = debounce(filterAndSortRepos, 300);
 repoSearch.addEventListener('input', debouncedSearch);
 ```
-The repo-search function fires at most once every 300 ms regardless of how fast the user types.
 
 #### IntersectionObserver with `unobserve`
 ```javascript
@@ -381,15 +359,70 @@ const observer = new IntersectionObserver((entries) => {
         if (entry.isIntersecting) {
             entry.target.style.opacity   = '1';
             entry.target.style.transform = 'translateY(0)';
-            observer.unobserve(entry.target); // ← Stop watching after first animation
+            observer.unobserve(entry.target);
         }
     });
 }, { threshold: 0.1, rootMargin: '0px 0px -80px 0px' });
 ```
-Calling `unobserve` removes the element from the observation set after it has animated once, reducing the number of elements the browser needs to monitor during scroll.
 
-#### CSS-Hardware Acceleration
-All animations use `transform` and `opacity` — properties handled by the GPU compositor. Properties that trigger layout (e.g., `top`, `left`, `height`) are avoided in animations.
+---
+
+### 5.6 Tech Reads Sidebar *(New – Assignment 4)*
+
+#### Overview
+A permanently visible sidebar fixed to the left edge of the page. It displays curated articles from 5 tech writers that the portfolio owner follows. All content is hardcoded — this decision was made deliberately after investigating RSS/API approaches that proved unreliable due to CORS restrictions on Substack feeds.
+
+#### Writers Featured
+| Writer | Topic | URL |
+|---|---|---|
+| Gary Marcus | AI Skepticism | garymarcus.substack.com |
+| Tate Jarrow | Tech & Culture | tatejarrow.substack.com |
+| Doks | Tech Writing | doks.substack.com |
+| Montajat Newsletter | Saudi Tech Careers | montajatnewsletter.substack.com |
+| Pragmatic Engineer | Software Engineering | newsletter.pragmaticengineer.com |
+
+#### Why Hardcoded Instead of Live RSS
+During development, three RSS proxy approaches were attempted:
+
+1. **rss2json.com** – blocked requests from GitHub Pages (CORS)
+2. **allorigins.win** – successfully proxied the request, but Substack feeds returned 403 (feed restricted by Substack)
+3. **Direct fetch** – blocked by browser CORS policy on both `file://` and `https://` origins
+
+The decision to hardcode articles ensures the feature is always functional and never shows error states. Article links still point to the real Substack pages so visitors can read the full content.
+
+#### Implementation
+```javascript
+const TECH_READS = [
+    {
+        writer:   'Gary Marcus',
+        topic:    'AI Skepticism',
+        url:      'https://garymarcus.substack.com',
+        color:    '#73A5C6',
+        articles: [ { title, excerpt, date, link }, ... ]
+    },
+    // ... 4 more writers
+];
+
+function renderTechReads() {
+    const sidebarContent = document.getElementById('sidebarContent');
+    let html = '';
+    TECH_READS.forEach(writer => {
+        const initials = writer.writer.split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase();
+        html += `<div class="writer-section">
+            <div class="writer-info">...</div>
+            <article class="article-card">...</article>
+        </div>`;
+    });
+    sidebarContent.innerHTML = html;
+}
+
+renderTechReads(); // Called immediately on page load — no async needed
+```
+
+#### Layout
+- **Width:** 260px fixed on the left
+- **`body { padding-left: 260px }`** pushes all main content to the right
+- **Hidden on screens < 900px** via `@media` query to preserve mobile usability
 
 ---
 
@@ -397,11 +430,10 @@ All animations use `transform` and `opacity` — properties handled by the GPU c
 
 | Breakpoint | Changes Applied |
 |---|---|
-| `< 968px` | About/Contact switch to single column; sort wrap loses auto margin |
+| `< 968px` | About/Contact switch to single column |
+| `< 900px` | Tech Reads sidebar hidden; body padding-left removed |
 | `< 768px` | Font size reduced to 14px; nav wraps; timer hidden; API controls stack |
 | `< 480px` | Hero buttons full-width; visitor input stacks; single-column GitHub grid |
-
-The GitHub grid uses `repeat(auto-fill, minmax(280px, 1fr))` to naturally reflow from 3 columns → 2 → 1 without breakpoint-specific overrides.
 
 ---
 
@@ -416,6 +448,7 @@ The GitHub grid uses `repeat(auto-fill, minmax(280px, 1fr))` to naturally reflow
 | `IntersectionObserver` | ✅ | ✅ | ✅ | ✅ |
 | `localStorage` | ✅ | ✅ | ✅ | ✅ |
 | Optional chaining (`?.`) | ✅ | ✅ | ✅ | ✅ |
+| CSS `-webkit-line-clamp` | ✅ | ✅ | ✅ | ✅ |
 
 ---
 
@@ -424,27 +457,38 @@ The GitHub grid uses `repeat(auto-fill, minmax(280px, 1fr))` to naturally reflow
 | Feature | Implementation |
 |---|---|
 | Navigation landmark | `role="navigation"` + `aria-label` on `<nav>` |
-| Screen-reader announcements | `aria-live="polite"` on GitHub loading/error regions and form status |
+| Sidebar landmark | `role="complementary"` + `aria-label` on `<aside>` |
+| Screen-reader announcements | `aria-live="polite"` on loading/error regions and form status |
 | Form error alerts | `role="alert"` on per-field error spans |
 | Theme toggle | `aria-label="Toggle dark/light theme"` |
 | Session timer | `aria-label="Time spent on page"` |
 | Decorative SVGs | `aria-hidden="true"` |
 | Section numbers | `aria-hidden="true"` (purely decorative) |
-| Form `required` | Replaced with explicit JS validation + visual indicators |
-| Focus indicators | Preserved from browser defaults; not overridden with `outline:none` except when replaced with a visible box-shadow |
 | Keyboard navigation | All interactive elements reachable via Tab in logical order |
+| Article links | `target="_blank"` with `rel="noopener noreferrer"` for security |
 
 ---
 
 ## 9. Known Limitations & Future Work
 
 ### Known Limitations
-- **GitHub API rate limit:** Unauthenticated requests are limited to 60/hour per IP. Exceeding this displays a 403 error message with a retry button.
-- **No real form submission:** The contact form simulates a send with a 0.9 s timeout. No email is actually sent. A backend (e.g., EmailJS, Formspree) would be needed for production.
-- **SVG project placeholders:** No real screenshots exist yet; placeholder SVGs are used.
+- **GitHub API rate limit:** Unauthenticated requests are limited to 60/hour per IP. Exceeding this displays a 403 error with a Retry button.
+- **No real form submission:** The contact form simulates a send. A backend service (e.g., EmailJS, Formspree) would be needed for production.
+- **Tech Reads articles hardcoded:** Due to CORS restrictions on Substack RSS feeds, articles are curated manually. They accurately represent each writer's topics but are not live-fetched.
+- **SVG project placeholders:** No real screenshots yet; placeholder SVGs are used.
 
-### Future Work
-- Add GitHub OAuth token (stored server-side) to raise API rate limit to 5,000/hour
+### Challenges Resolved
+- **CORS on RSS feeds:** Investigated three proxy solutions; settled on hardcoded data as the most reliable approach for a statically-hosted site.
+- **Repo name URL issue:** Initial GitHub repository name contained the URL string; renamed via GitHub Settings before deployment.
+- **File path errors:** Moved files from flat root to organised subfolders (`css/`, `js/`); updated `<link>` and `<script>` src paths accordingly.
+
+### Challenges Unresolved
+- Live RSS feed fetching for the Tech Reads sidebar (requires a backend proxy or server-side API key)
+- Real email sending via contact form
+
+### Planned for Future Work
+- Add GitHub OAuth token (server-side) to raise API rate limit to 5,000/hour
+- Integrate a backend proxy to enable live Substack RSS fetching
 - Integrate EmailJS for real form submission
 - Add `loading="lazy"` to real project images when screenshots are added
 - Add a Service Worker for offline support
@@ -452,7 +496,7 @@ The GitHub grid uses `repeat(auto-fill, minmax(280px, 1fr))` to naturally reflow
 
 ---
 
-**Document Version:** 3.0  
+**Document Version:** 4.0  
 **Last Updated:** April 2025  
 **Next Review:** June 2025  
 **Developer:** Nada Alshahrani
