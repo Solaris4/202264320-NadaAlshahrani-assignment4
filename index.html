@@ -11,29 +11,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- ===== Substack Reading Sidebar (Assignment 4 – New Feature) ===== -->
-
-    <!-- Overlay (closes sidebar on outside click on mobile) -->
-    <div class="sidebar-overlay" id="sidebarOverlay" aria-hidden="true"></div>
-
-    <!-- Toggle button (always visible on left edge) -->
-    <button class="substack-toggle" id="substackToggle" aria-label="Open tech reading sidebar" aria-expanded="false" aria-controls="substackSidebar">
-        <span class="toggle-icon">📰</span>
-        Tech Reads
-    </button>
-
-    <!-- Sidebar panel -->
+    <!-- ===== Tech Reads Sidebar (Assignment 4 – New Feature) ===== -->
     <aside class="substack-sidebar" id="substackSidebar" role="complementary" aria-label="Tech reading sidebar">
         <div class="sidebar-header">
             <h2>📰 Tech Reads</h2>
-            <button class="sidebar-close" id="sidebarClose" aria-label="Close sidebar">✕</button>
         </div>
-
-        <!-- Writer tabs -->
-        <div class="sidebar-tabs" role="tablist" aria-label="Tech writers" id="sidebarTabs"></div>
-
-        <!-- Articles content area -->
-        <div class="sidebar-content" id="sidebarContent" role="tabpanel"></div>
+        <div class="sidebar-content" id="sidebarContent" role="region" aria-label="Curated tech articles"></div>
     </aside>
 
     <!-- Navigation -->
@@ -48,7 +31,6 @@
                 <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
             <div class="nav-controls">
-                <!-- Visitor session timer -->
                 <div class="session-timer" id="sessionTimer" aria-label="Time spent on page">
                     <span class="timer-icon">⏱️</span>
                     <span id="timerDisplay">0:00</span>
@@ -81,8 +63,6 @@
                 </h1>
                 <p class="hero-subtitle">Software Engineering Student</p>
                 <p class="hero-tagline">Building the future, one line of code at a time</p>
-
-                <!-- Visitor Name Input (State Management Feature) -->
                 <div class="visitor-name-box" id="visitorNameBox">
                     <p class="visitor-prompt">May I know your name? 👋</p>
                     <div class="visitor-input-row">
@@ -90,7 +70,6 @@
                         <button class="btn btn-primary btn-sm" id="visitorNameSubmit">Hello!</button>
                     </div>
                 </div>
-
                 <div class="hero-buttons">
                     <a href="#github" class="btn btn-primary">View My GitHub</a>
                     <a href="#contact" class="btn btn-secondary">Get In Touch</a>
@@ -112,9 +91,9 @@
             <div class="about-content">
                 <div class="about-text">
                     <p class="about-intro">
-                        I'm a Software Engineering student at King Fahad University of Petroleum and Minerals, 
-                        passionate about creating innovative solutions through code. With a strong foundation in 
-                        object-oriented programming and web development, I'm constantly exploring new technologies 
+                        I'm a Software Engineering student at King Fahad University of Petroleum and Minerals,
+                        passionate about creating innovative solutions through code. With a strong foundation in
+                        object-oriented programming and web development, I'm constantly exploring new technologies
                         and pushing the boundaries of what's possible.
                     </p>
                     <div class="about-details">
@@ -162,16 +141,14 @@
         </div>
     </section>
 
-    <!-- ===== GitHub API Section (NEW - Assignment 3) ===== -->
+    <!-- GitHub API Section -->
     <section class="github-section" id="github">
         <div class="container">
             <div class="section-header">
                 <span class="section-number" aria-hidden="true">02</span>
                 <h2 class="section-title">GitHub Repositories</h2>
             </div>
-            <p class="github-intro">
-                Live data fetched from the GitHub API — showing my public repositories.
-            </p>
+            <p class="github-intro">Live data fetched from the GitHub API — showing my public repositories.</p>
             <div class="github-controls">
                 <div class="github-search-wrap">
                     <input type="text" id="repoSearch" class="repo-search" placeholder="🔍 Search repositories..." aria-label="Search repositories">
@@ -206,8 +183,6 @@
                 <span class="section-number" aria-hidden="true">03</span>
                 <h2 class="section-title">Featured Projects</h2>
             </div>
-
-            <!-- Filter + Sort Controls (Complex Logic) -->
             <div class="project-controls">
                 <div class="project-filters" role="group" aria-label="Filter projects by category">
                     <button class="filter-btn active" data-filter="all">All</button>
@@ -226,9 +201,7 @@
                     </select>
                 </div>
             </div>
-
             <p id="emptyMessage" class="empty-message" style="display:none;" role="status">No projects match the selected filter.</p>
-
             <div class="projects-grid" id="projectsGrid">
                 <div class="project-card" data-category="design" data-date="2024-12" data-name="KFUPM Events Management System">
                     <div class="project-image">
@@ -239,22 +212,17 @@
                                 <text x="200" y="170" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="14" font-family="sans-serif">UI/UX Design</text>
                             </svg>
                         </div>
-                        <div class="project-overlay">
-                            <span class="project-category-badge">Design</span>
-                        </div>
+                        <div class="project-overlay"><span class="project-category-badge">Design</span></div>
                     </div>
                     <div class="project-content">
                         <h3 class="project-title">KFUPM Events Management System</h3>
-                        <p class="project-description">
-                            Collaborated on designing and prototyping a centralized university events platform using UI/UX design principles.
-                        </p>
+                        <p class="project-description">Collaborated on designing and prototyping a centralized university events platform using UI/UX design principles.</p>
                         <div class="project-meta">
                             <span class="project-date">Dec 2024</span>
                             <span class="project-cat-tag design">Design</span>
                         </div>
                     </div>
                 </div>
-
                 <div class="project-card" data-category="research" data-date="2025-01" data-name="Natural Language Processing Research Article">
                     <div class="project-image">
                         <div class="project-placeholder">
@@ -264,22 +232,17 @@
                                 <text x="200" y="170" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="14" font-family="sans-serif">AI &amp; Research</text>
                             </svg>
                         </div>
-                        <div class="project-overlay">
-                            <span class="project-category-badge">Research</span>
-                        </div>
+                        <div class="project-overlay"><span class="project-category-badge">Research</span></div>
                     </div>
                     <div class="project-content">
                         <h3 class="project-title">Natural Language Processing Research Article</h3>
-                        <p class="project-description">
-                            Authored a technical article on NLP and AI applications for the KFUPM AI Club magazine.
-                        </p>
+                        <p class="project-description">Authored a technical article on NLP and AI applications for the KFUPM AI Club magazine.</p>
                         <div class="project-meta">
                             <span class="project-date">Jan 2025</span>
                             <span class="project-cat-tag research">Research</span>
                         </div>
                     </div>
                 </div>
-
                 <div class="project-card" data-category="web" data-date="2025-02" data-name="Personal Portfolio Website">
                     <div class="project-image">
                         <div class="project-placeholder">
@@ -289,15 +252,11 @@
                                 <text x="200" y="170" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="14" font-family="sans-serif">HTML · CSS · JS</text>
                             </svg>
                         </div>
-                        <div class="project-overlay">
-                            <span class="project-category-badge">Web</span>
-                        </div>
+                        <div class="project-overlay"><span class="project-category-badge">Web</span></div>
                     </div>
                     <div class="project-content">
                         <h3 class="project-title">Personal Portfolio Website</h3>
-                        <p class="project-description">
-                            This very portfolio, built from scratch with HTML, CSS, and JavaScript — featuring dark mode, API integration, and dynamic content.
-                        </p>
+                        <p class="project-description">This very portfolio, built from scratch with HTML, CSS, and JavaScript — featuring dark mode, API integration, and dynamic content.</p>
                         <div class="project-meta">
                             <span class="project-date">Feb 2025</span>
                             <span class="project-cat-tag web">Web</span>
@@ -322,11 +281,7 @@
                         <div class="timeline-date">Sep 2024 – Jan 2025</div>
                         <h3 class="timeline-title">Lab Assistant – ICS 108</h3>
                         <h4 class="timeline-subtitle">ICS Department, KFUPM</h4>
-                        <p class="timeline-description">
-                            Assisted students in understanding object-oriented programming concepts using Java 
-                            during weekly lab sessions. Helped debug code, explained complex programming concepts, 
-                            and fostered a collaborative learning environment.
-                        </p>
+                        <p class="timeline-description">Assisted students in understanding object-oriented programming concepts using Java during weekly lab sessions.</p>
                     </div>
                 </div>
                 <div class="timeline-item">
@@ -335,11 +290,7 @@
                         <div class="timeline-date">Sep 2025 – Jan 2026</div>
                         <h3 class="timeline-title">Research Committee Member</h3>
                         <h4 class="timeline-subtitle">KFUPM Artificial Intelligence Club (AIC)</h4>
-                        <p class="timeline-description">
-                            Active member of the research committee, contributing to AI-related initiatives. 
-                            Authored technical articles on Natural Language Processing for the AIC student magazine, 
-                            promoting AI literacy and research awareness among peers.
-                        </p>
+                        <p class="timeline-description">Active member of the research committee, contributing to AI-related initiatives. Authored technical articles on NLP for the AIC student magazine.</p>
                     </div>
                 </div>
             </div>
@@ -355,10 +306,7 @@
             </div>
             <div class="contact-content">
                 <div class="contact-info">
-                    <p class="contact-intro">
-                        I'm currently seeking summer training opportunities and always open to discussing 
-                        software engineering, AI research, or collaborative projects. Let's connect!
-                    </p>
+                    <p class="contact-intro">I'm currently seeking summer training opportunities and always open to discussing software engineering, AI research, or collaborative projects. Let's connect!</p>
                     <div class="contact-details">
                         <div class="contact-item">
                             <span class="contact-icon" aria-hidden="true">📧</span>
@@ -378,7 +326,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- Enhanced Contact Form (Complex Logic - multiple validations) -->
                 <form class="contact-form" id="contactForm" novalidate>
                     <div class="form-group">
                         <label for="name">Full Name <span class="required">*</span></label>

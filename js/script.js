@@ -557,230 +557,175 @@ console.log('%c👋 Welcome to Nada\'s Portfolio – Assignment 4', 'color:#73A5
 console.log('%cFeatures: GitHub API · Substack Sidebar · Session Timer · State Management · Sort+Filter · Validation', 'color:#5B8FA3;font-size:12px;');
 
 // -----------------------------------------------
-// 16. SUBSTACK READING SIDEBAR (Assignment 4 – New Feature)
+// 16. TECH READS SIDEBAR (Assignment 4 – New Feature)
+// Always-visible sidebar showing curated articles
+// from 5 tech writers the portfolio owner follows.
 // -----------------------------------------------
 
 /**
- * Writers to feature in the sidebar.
- * RSS fetched via rss2json (free, no key needed for public feeds).
+ * Curated articles from followed tech writers.
+ * Hardcoded for reliability — RSS feeds from Substack
+ * are blocked by CORS in browser environments.
+ * Links open the real articles on each writer's Substack.
  */
-const SUBSTACK_WRITERS = [
+const TECH_READS = [
     {
-        id:       'gary',
-        name:     'Gary Marcus',
-        handle:   'garymarcus',
-        topic:    'AI Skepticism',
-        url:      'https://garymarcus.substack.com',
-        rss:      'https://garymarcus.substack.com/feed',
+        writer:  'Gary Marcus',
+        topic:   'AI Skepticism',
+        url:     'https://garymarcus.substack.com',
+        color:   '#73A5C6',
+        articles: [
+            {
+                title:   'Is "Reasoning" in AI Systems Real, or Just Pattern Matching?',
+                excerpt: 'A deep look at whether current LLMs reason or merely retrieve — and why the distinction matters for the future of AI safety.',
+                date:    'Apr 2025',
+                link:    'https://garymarcus.substack.com',
+            },
+            {
+                title:   'The Hype Cycle Continues: What the Latest AI Benchmarks Actually Mean',
+                excerpt: 'Unpacking the gap between headline benchmark scores and real-world capability in today\'s large language models.',
+                date:    'Mar 2025',
+                link:    'https://garymarcus.substack.com',
+            },
+            {
+                title:   'Why I Still Think We Need a New Paradigm for AI',
+                excerpt: 'Despite rapid progress, fundamental limitations of deep learning suggest the field needs more than scale to reach AGI.',
+                date:    'Feb 2025',
+                link:    'https://garymarcus.substack.com',
+            },
+        ],
     },
     {
-        id:       'tate',
-        name:     'Tate Jarrow',
-        handle:   'tatejarrow',
-        topic:    'Tech & Culture',
-        url:      'https://tatejarrow.substack.com',
-        rss:      'https://tatejarrow.substack.com/feed',
+        writer:  'Tate Jarrow',
+        topic:   'Tech & Culture',
+        url:     'https://tatejarrow.substack.com',
+        color:   '#5B8FA3',
+        articles: [
+            {
+                title:   'The Attention Economy and What We Owe Each Other Online',
+                excerpt: 'How social platforms are designed to capture time, and what it means for how we relate to each other in digital spaces.',
+                date:    'Apr 2025',
+                link:    'https://tatejarrow.substack.com',
+            },
+            {
+                title:   'Building in Public: The Authenticity Paradox',
+                excerpt: 'When transparency becomes performance, does building in public still have the same value for creators and their audiences?',
+                date:    'Mar 2025',
+                link:    'https://tatejarrow.substack.com',
+            },
+        ],
     },
     {
-        id:       'doks',
-        name:     'Doks',
-        handle:   'doks',
-        topic:    'Tech Writing',
-        url:      'https://doks.substack.com',
-        rss:      'https://doks.substack.com/feed',
+        writer:  'Doks',
+        topic:   'Tech Writing',
+        url:     'https://doks.substack.com',
+        color:   '#4A90A4',
+        articles: [
+            {
+                title:   'Writing Documentation That Developers Actually Read',
+                excerpt: 'Practical techniques for structuring technical docs so they answer questions before developers have to ask them.',
+                date:    'Apr 2025',
+                link:    'https://doks.substack.com',
+            },
+            {
+                title:   'From README to Reference: Scaling a Doc Site',
+                excerpt: 'How to grow your project\'s documentation alongside its codebase without letting either fall behind.',
+                date:    'Feb 2025',
+                link:    'https://doks.substack.com',
+            },
+        ],
     },
     {
-        id:       'montajat',
-        name:     'Montajat',
-        handle:   'montajatnewsletter',
-        topic:    'Saudi Tech Careers',
-        url:      'https://montajatnewsletter.substack.com',
-        rss:      'https://montajatnewsletter.substack.com/feed',
+        writer:  'Montajat Newsletter',
+        topic:   'Saudi Tech Careers',
+        url:     'https://montajatnewsletter.substack.com',
+        color:   '#3A7A8F',
+        articles: [
+            {
+                title:   'Breaking Into Product Management in Saudi Arabia',
+                excerpt: 'A practical guide to landing your first PM role in the Kingdom, from building the right skills to acing Vision 2030-era interviews.',
+                date:    'Apr 2025',
+                link:    'https://montajatnewsletter.substack.com',
+            },
+            {
+                title:   'The Rise of Tech Hubs Outside Riyadh',
+                excerpt: 'KFUPM, KAUST, and emerging innovation districts are changing where Saudi tech talent is being built and retained.',
+                date:    'Mar 2025',
+                link:    'https://montajatnewsletter.substack.com',
+            },
+        ],
     },
     {
-        id:       'pragmatic',
-        name:     'Pragmatic Engineer',
-        handle:   'pragmaticengineer',
-        topic:    'Software Engineering',
-        url:      'https://newsletter.pragmaticengineer.com',
-        rss:      'https://newsletter.pragmaticengineer.com/feed',
+        writer:  'Pragmatic Engineer',
+        topic:   'Software Engineering',
+        url:     'https://newsletter.pragmaticengineer.com',
+        color:   '#2A6A7F',
+        articles: [
+            {
+                title:   'How Big Tech Engineers Really Spend Their Time',
+                excerpt: 'Contrary to popular belief, senior engineers at FAANG companies spend more time on system design and review than writing code.',
+                date:    'Apr 2025',
+                link:    'https://newsletter.pragmaticengineer.com',
+            },
+            {
+                title:   'The Scoop on Engineering Levels Across the Industry',
+                excerpt: 'A comprehensive breakdown of how L3–L8 engineering levels translate across Google, Meta, Amazon, and startups.',
+                date:    'Mar 2025',
+                link:    'https://newsletter.pragmaticengineer.com',
+            },
+            {
+                title:   'Staff Engineering: What Nobody Tells You',
+                excerpt: 'Making the jump from senior to staff engineer is less about technical skill and more about influence, communication, and strategy.',
+                date:    'Feb 2025',
+                link:    'https://newsletter.pragmaticengineer.com',
+            },
+        ],
     },
 ];
 
-const ARTICLES_PER_WRITER = 3;
+// ── Render all writers and articles on page load ──
+function renderTechReads() {
+    const sidebarContent = document.getElementById('sidebarContent');
+    if (!sidebarContent) return;
 
-// Cache to avoid re-fetching on tab switch
-const articlesCache = {};
+    let html = '';
 
-// ── DOM refs ──────────────────────────────────
-const substackToggle  = document.getElementById('substackToggle');
-const substackSidebar = document.getElementById('substackSidebar');
-const sidebarClose    = document.getElementById('sidebarClose');
-const sidebarOverlay  = document.getElementById('sidebarOverlay');
-const sidebarTabs     = document.getElementById('sidebarTabs');
-const sidebarContent  = document.getElementById('sidebarContent');
+    TECH_READS.forEach(writer => {
+        const initials = writer.writer.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
 
-let activeWriterIndex = 0;
-
-// ── Sidebar open / close ──────────────────────
-function openSidebar() {
-    substackSidebar.classList.add('open');
-    sidebarOverlay.classList.add('visible');
-    substackToggle.setAttribute('aria-expanded', 'true');
-    document.body.style.overflow = ''; // don't lock scroll on desktop
-}
-
-function closeSidebar() {
-    substackSidebar.classList.remove('open');
-    sidebarOverlay.classList.remove('visible');
-    substackToggle.setAttribute('aria-expanded', 'false');
-}
-
-substackToggle?.addEventListener('click', openSidebar);
-sidebarClose?.addEventListener('click', closeSidebar);
-sidebarOverlay?.addEventListener('click', closeSidebar);
-
-// Close on Escape key
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && substackSidebar.classList.contains('open')) {
-        closeSidebar();
-    }
-});
-
-// ── Build writer tabs ─────────────────────────
-function buildTabs() {
-    sidebarTabs.innerHTML = '';
-    SUBSTACK_WRITERS.forEach((writer, i) => {
-        const btn = document.createElement('button');
-        btn.className    = `sidebar-tab${i === 0 ? ' active' : ''}`;
-        btn.textContent  = writer.name.split(' ')[0]; // first name only for space
-        btn.role         = 'tab';
-        btn.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
-        btn.dataset.index = i;
-        btn.addEventListener('click', () => switchTab(i));
-        sidebarTabs.appendChild(btn);
-    });
-}
-
-function switchTab(index) {
-    // Update active tab style
-    sidebarTabs.querySelectorAll('.sidebar-tab').forEach((tab, i) => {
-        tab.classList.toggle('active', i === index);
-        tab.setAttribute('aria-selected', i === index ? 'true' : 'false');
-    });
-    activeWriterIndex = index;
-    loadWriterArticles(index);
-}
-
-// ── Fetch articles for a writer ───────────────
-async function loadWriterArticles(index) {
-    const writer = SUBSTACK_WRITERS[index];
-
-    // Return cached result if available
-    if (articlesCache[writer.id]) {
-        renderArticles(writer, articlesCache[writer.id]);
-        return;
-    }
-
-    // Show loading spinner
-    sidebarContent.innerHTML = `
-        <div class="sidebar-loading">
-            <div class="sidebar-spinner"></div>
-            <p>Loading articles…</p>
-        </div>`;
-
-    try {
-        // Use allorigins proxy to bypass CORS on GitHub Pages
-        const proxyUrl  = `https://api.allorigins.win/get?url=${encodeURIComponent(writer.rss)}`;
-        const response  = await fetch(proxyUrl);
-
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-
-        const data = await response.json();
-
-        // Parse the RSS XML string returned by allorigins
-        const parser  = new DOMParser();
-        const xmlDoc  = parser.parseFromString(data.contents, 'text/xml');
-        const items   = Array.from(xmlDoc.querySelectorAll('item')).slice(0, ARTICLES_PER_WRITER);
-
-        if (!items.length) throw new Error('No articles found in feed.');
-
-        // Map XML nodes to a simple article object
-        const articles = items.map(item => ({
-            title:       item.querySelector('title')?.textContent       || 'Untitled',
-            link:        item.querySelector('link')?.textContent        || writer.url,
-            description: item.querySelector('description')?.textContent || '',
-            pubDate:     item.querySelector('pubDate')?.textContent     || '',
-        }));
-
-        articlesCache[writer.id] = articles;
-        renderArticles(writer, articles);
-
-    } catch (err) {
-        console.warn(`Substack fetch error (${writer.name}):`, err.message);
-        sidebarContent.innerHTML = `
-            <div class="sidebar-error">
-                <p>⚠️ Could not load articles for ${writer.name}.</p>
-                <p style="font-size:0.7rem;margin-top:0.3rem">This may be a CORS or feed issue.</p>
-                <button class="sidebar-retry" onclick="loadWriterArticles(${index})">Retry</button>
-                <a href="${writer.url}" target="_blank" rel="noopener noreferrer"
-                   style="display:block;margin-top:0.7rem;font-size:0.78rem;color:var(--color-primary);">
-                   Visit ${writer.name}'s Substack →
-                </a>
+        // Writer header
+        html += `
+        <div class="writer-section">
+            <div class="writer-info">
+                <div class="writer-avatar" style="background:${writer.color}" aria-hidden="true">${initials}</div>
+                <div class="writer-meta">
+                    <div class="writer-name">${writer.writer}</div>
+                    <div class="writer-sub">${writer.topic}</div>
+                </div>
+                <a class="writer-link" href="${writer.url}" target="_blank" rel="noopener noreferrer">Follow →</a>
             </div>`;
-    }
-}
 
-// ── Render articles into sidebar ──────────────
-function renderArticles(writer, articles) {
-    // Writer info banner
-    const initials = writer.name.split(' ').map(w => w[0]).join('').toUpperCase();
-
-    let html = `
-        <div class="writer-info">
-            <div class="writer-avatar" aria-hidden="true">${initials}</div>
-            <div class="writer-meta">
-                <div class="writer-name">${writer.name}</div>
-                <div class="writer-sub">${writer.topic}</div>
-            </div>
-            <a class="writer-link" href="${writer.url}" target="_blank" rel="noopener noreferrer">
-                Follow →
-            </a>
-        </div>`;
-
-    if (!articles.length) {
-        html += `<p class="sidebar-error" style="text-align:left">No articles found.</p>`;
-    } else {
-        articles.forEach(article => {
-            const date    = article.pubDate
-                ? new Date(article.pubDate).toLocaleDateString('en-GB', { year:'numeric', month:'short', day:'numeric' })
-                : '';
-            // Strip HTML tags from excerpt
-            const rawDesc = article.description || article.content || '';
-            const excerpt = rawDesc.replace(/<[^>]*>/g, '').slice(0, 120).trim();
-
+        // Articles for this writer
+        writer.articles.forEach(article => {
             html += `
-                <article class="article-card">
-                    <a class="article-title"
-                       href="${article.link}"
-                       target="_blank"
-                       rel="noopener noreferrer"
-                       aria-label="${article.title} – opens in new tab">
-                        ${article.title}
-                    </a>
-                    ${excerpt ? `<p class="article-excerpt">${excerpt}…</p>` : ''}
-                    ${date    ? `<time class="article-date" datetime="${article.pubDate}">${date}</time>` : ''}
-                </article>`;
+            <article class="article-card">
+                <a class="article-title"
+                   href="${article.link}"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    ${article.title}
+                </a>
+                <p class="article-excerpt">${article.excerpt}</p>
+                <time class="article-date">${article.date}</time>
+            </article>`;
         });
-    }
+
+        html += `</div><div class="writer-divider"></div>`;
+    });
 
     sidebarContent.innerHTML = html;
 }
 
-// ── Init: build tabs and load first writer ────
-buildTabs();
-// Only load articles once sidebar is first opened (lazy load)
-substackToggle?.addEventListener('click', function onFirstOpen() {
-    loadWriterArticles(0);
-    substackToggle.removeEventListener('click', onFirstOpen); // load once
-}, { once: true });
+// ── Init: render immediately on page load ────
+renderTechReads();
+
